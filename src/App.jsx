@@ -1,63 +1,64 @@
 import React, { useState } from 'react';
+import './index.css';
 
-function App() {
-  const [todos, setTodos] = useState([]);
-  const [input, setInput] = useState('');
+const App = () => {
+  const [task, setTask] = useState('');
+  const [tasks, setTasks] = useState([]);
+  const [theme, setTheme] = useState('light');
 
-  const addTodo = () => {
-    if (input.trim() === '') return;
-    setTodos([...todos, input.trim()]);
-    setInput('');
+  const addTask = () => {
+    if (task.trim()) {
+      setTasks([...tasks, task]);
+      setTask('');
+    }
   };
 
-  const deleteTodo = (index) => {
-    const updated = [...todos];
-    updated.splice(index, 1);
-    setTodos(updated);
+  const toggleTheme = () => {
+    setTheme(theme === 'light' ? 'dark' : 'light');
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md rounded-xl bg-white p-6 shadow-md">
-        <h1 className="mb-4 text-center text-2xl font-bold text-gray-800">
-          Todo App
-        </h1>
-
-        <div className="mb-4 flex gap-2">
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder="Enter a task"
-            className="flex-1 rounded-md border border-gray-300 px-3 py-2 focus:ring-2 focus:ring-blue-400 focus:outline-none"
-          />
-          <button
-            onClick={addTodo}
-            className="rounded-md bg-blue-500 px-4 py-2 text-white transition-colors duration-300 hover:bg-blue-600"
-          >
-            Add
-          </button>
-        </div>
-
-        <ul className="space-y-2">
-          {todos.map((todo, index) => (
-            <li
-              key={index}
-              className="flex items-center justify-between rounded-md bg-gray-50 px-4 py-2 transition hover:bg-gray-100"
-            >
-              <span className="text-gray-800">{todo}</span>
-              <button
-                onClick={() => deleteTodo(index)}
-                className="text-red-500 transition hover:text-red-700"
-              >
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
+    <div
+      className={
+        theme === 'light'
+          ? 'min-h-screen bg-white p-8 text-black'
+          : 'min-h-screen bg-gray-900 p-8 text-white'
+      }
+    >
+      <div className="mb-8 flex items-center justify-between">
+        <h1 className="text-2xl font-bold">My Todo App</h1>
+        <button
+          onClick={toggleTheme}
+          className="rounded border px-4 py-2 hover:bg-gray-200 dark:hover:bg-gray-800"
+        >
+          Toggle {theme === 'light' ? 'Dark' : 'Light'} Theme
+        </button>
       </div>
+
+      <div className="mb-4 flex">
+        <input
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
+          className="mr-2 flex-grow rounded border p-2"
+          placeholder="Enter a task"
+        />
+        <button
+          onClick={addTask}
+          className="rounded bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+        >
+          Add
+        </button>
+      </div>
+
+      <ul className="space-y-2">
+        {tasks.map((t, i) => (
+          <li key={i} className="border-b py-1">
+            {t}
+          </li>
+        ))}
+      </ul>
     </div>
   );
-}
+};
 
 export default App;
