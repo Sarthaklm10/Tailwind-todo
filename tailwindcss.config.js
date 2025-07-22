@@ -1,9 +1,14 @@
-/** @type {import('tailwindcss').Config} */
-export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  darkMode: 'class', // or 'media'
+module.exports = {
+  darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: '#6366F1', // Indigo-500
+        secondary: '#F472B6', // Pink-400
+        background: '#F9FAFB',
+        darkBg: '#1E293B', // Slate-800
+      },
+    },
   },
   plugins: [],
 };
